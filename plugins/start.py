@@ -47,125 +47,17 @@ async def _human_time_duration(seconds):
 
 
 @Bot.on_message(filters.command("start") & filters.private & subsall & subsch & subsgc)
-async def start_command(client: Bot, message: Message):
-    id = message.from_user.id
-    user_name = (
-        f"@{message.from_user.username}"
-        if message.from_user.username
-        else None
-    )
+def start_command(client, message):
+    # Video URL and Caption
+    video_url = "https://graph.org/file/e8b7439b7482e3ee0678e.mp4"
+    caption = "Hello! @{message.from_user.username}"
 
-    try:
-        await add_user(id, user_name)
-    except:
-        pass
-    text = message.text
-    if len(text) > 7:
-        try:
-            base64_string = text.split(" ", 1)[1]
-        except BaseException:
-            return
-        string = await decode(base64_string)
-        argument = string.split("-")
-        if len(argument) == 3:
-            try:
-                start = int(int(argument[1]) / abs(client.db_channel.id))
-                end = int(int(argument[2]) / abs(client.db_channel.id))
-            except BaseException:
-                return
-            if start <= end:
-                ids = range(start, end + 1)
-            else:
-                ids = []
-                i = start
-                while True:
-                    ids.append(i)
-                    i -= 1
-                    if i < end:
-                        break
-        elif len(argument) == 2:
-            try:
-                ids = [int(int(argument[1]) / abs(client.db_channel.id))]
-            except BaseException:
-                return
-        temp_msg = await message.reply("<code>Wait A Second...</code>")
-        try:
-            messages = await get_messages(client, ids)
-        except BaseException:
-            await message.reply_text("<b>An Error Has Occurred </b>🥺")
-            return
-        await temp_msg.delete()
+    # Inline keyboard button
+    button = InlineKeyboardButton("Click Me", url="https://www.example.com")
+    reply_markup = InlineKeyboardMarkup([[button]])
 
-        for msg in messages:
-
-            if bool(CUSTOM_CAPTION) & bool(msg.document):
-                caption = CUSTOM_CAPTION.format(
-                    previouscaption=msg.caption.html if msg.caption else "",
-                    filename=msg.document.file_name,
-                )
-
-            else:
-                caption = msg.caption.html if msg.caption else ""
-
-            reply_markup = msg.reply_markup if DISABLE_CHANNEL_BUTTON else None
-            try:
-                await msg.copy(
-                    chat_id=message.from_user.id,
-                    caption=caption,
-                    parse_mode="html",
-                    protect_content=PROTECT_CONTENT,
-                    reply_markup=reply_markup,
-                )
-                await asyncio.sleep(0.5)
-            except FloodWait as e:
-                await asyncio.sleep(e.x)
-                await msg.copy(
-                    chat_id=message.from_user.id,
-                    caption=caption,
-                    parse_mode="html",
-                    protect_content=PROTECT_CONTENT,
-                    reply_markup=reply_markup,
-                )
-            except BaseException:
-                pass
-    else:
-        out = start_button(client)
-        await message.reply_text(
-            text=START_MSG.format(
-                first=message.from_user.first_name,
-                last=message.from_user.last_name,
-                username=f"@{message.from_user.username}"
-                if message.from_user.username
-                else None,
-                mention=message.from_user.mention,
-                id=message.from_user.id,
-            ),
-            reply_markup=InlineKeyboardMarkup(out),
-            disable_web_page_preview=True,
-            quote=True,
-        )
-
-
-    return
-
-
-@Bot.on_message(filters.command("start") & filters.private)
-async def not_joined(client: Bot, message: Message):
-    buttons = fsub_button(client, message)
-    await message.reply(
-        text=FORCE_MSG.format(
-            first=message.from_user.first_name,
-            last=message.from_user.last_name,
-            username=f"@{message.from_user.username}"
-            if message.from_user.username
-            else None,
-            mention=message.from_user.mention,
-            id=message.from_user.id,
-        ),
-        reply_markup=InlineKeyboardMarkup(buttons),
-        quote=True,
-        disable_web_page_preview=True,
-    )
+    # Send the video with caption and inline button
+    message.reply_video(video_url, caption=caption, reply_markup=reply_markup)
 
 
 @Bot.on_message(filters.command(["users", "stats"]) & filters.user(ADMINS))
