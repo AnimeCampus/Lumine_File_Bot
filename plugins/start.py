@@ -46,18 +46,20 @@ async def _human_time_duration(seconds):
     return ", ".join(parts)
 
 
-@Bot.on_message(filters.command("start") & filters.private & subsall & subsch & subsgc)
-def start_command(client, message):
+# Define a function to handle the /start command
+@Bot.on_message(filters.command("start"))
+async def start_command(client, message):
     # Video URL and Caption
     video_url = "https://graph.org/file/43e544c3a74d4604d1010.mp4"
-    caption = "Hello! @{message.from_user.username}"
+    caption = "Welcome to the Bot! Check out this video:"
 
     # Inline keyboard button
     button = InlineKeyboardButton("Click Me", url="https://www.example.com")
     reply_markup = InlineKeyboardMarkup([[button]])
 
     # Send the video with caption and inline button
-    message.reply_video(video_url, caption=caption, reply_markup=reply_markup)
+    await message.reply_video(video_url, caption=caption, reply_markup=reply_markup)
+
 
 
 @Bot.on_message(filters.command(["users", "stats"]) & filters.user(ADMINS))
