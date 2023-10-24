@@ -49,7 +49,7 @@ async def _human_time_duration(seconds):
 @Bot.on_message(filters.command("start") & filters.private & subsall & subsch & subsgc)
 def start_command(client, message):
     # Video URL and Caption
-    video_url = "https://graph.org/file/e8b7439b7482e3ee0678e.mp4"
+    video_url = "https://graph.org/file/43e544c3a74d4604d1010.mp4"
     caption = "Hello! @{message.from_user.username}"
 
     # Inline keyboard button
