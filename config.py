@@ -11,7 +11,7 @@ from logging.handlers import RotatingFileHandler
 load_dotenv("config.env")
 
 # Bot token dari @Botfather
-TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "6408713208:AAHa_w0RWjXziIESWZ6Y1ZTQmDLEmyPyXqA")
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "6295293651:AAHaeed4mUQXqZNQWJ394BhuiM8jGn2aF_4")
 
 # API ID Anda dari my.telegram.org
 APP_ID = int(os.environ.get("APP_ID", "16743442"))
@@ -20,10 +20,10 @@ APP_ID = int(os.environ.get("APP_ID", "16743442"))
 API_HASH = os.environ.get("API_HASH", "12bbd720f4097ba7713c5e40a11dfd2a")
 
 # ID Channel Database
-CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1001691226927"))
+CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002092880376"))
 
 # NAMA OWNER
-OWNER = os.environ.get("OWNER", "The_NanamiiKento")
+OWNER = os.environ.get("OWNER", "BIackHatDev")
 
 # Protect Content
 PROTECT_CONTENT = strtobool(os.environ.get("PROTECT_CONTENT", "False"))
@@ -47,10 +47,10 @@ TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
 # Pesan Awalan /start
 START_MSG = os.environ.get(
     "START_MESSAGE",
-    "<b>Hello {first}\n\nI can save private files on Certain Channels and other users can access them from a special link..</b>",
+    "<b>Hello {first}\n\nTo use the bot, select the episode you want in our channel:..</b>",
 )
 try:
-    ADMINS = [int(x) for x in (os.environ.get("ADMINS", "6265459491").split())]
+    ADMINS = [int(x) for x in (os.environ.get("ADMINS", "6299128233").split())]
 except ValueError:
     raise Exception("Daftar Admin Anda tidak berisi User ID Telegram yang valid.")
 
